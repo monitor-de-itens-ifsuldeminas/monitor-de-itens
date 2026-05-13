@@ -48,7 +48,7 @@ Informa ao app qual é o UID da etiqueta que está encostada no leitor no moment
 
 ### Respostas
 
-**✅ UID disponível (Simulado) → `200 OK**`
+**✅ UID disponível (Simulado) → `200 OK`**
 
 ```json
 {
@@ -58,7 +58,7 @@ Informa ao app qual é o UID da etiqueta que está encostada no leitor no moment
 
 ```
 
-**✅ Nenhum UID no leitor → `200 OK**`
+**✅ Nenhum UID no leitor → `200 OK`**
 
 ```json
 {
@@ -88,7 +88,7 @@ Recebe os detalhes do item preenchidos no app e os "salva" na lista.
 
 ### Respostas
 
-**Item cadastrado com sucesso → `201 Created**`
+**Item cadastrado com sucesso → `201 Created`**
 
 ```json
 {
@@ -98,7 +98,7 @@ Recebe os detalhes do item preenchidos no app e os "salva" na lista.
 
 ```
 
-**UID já existe na lista → `409 Conflict**`
+**UID já existe na lista → `409 Conflict`**
 
 ```json
 {
@@ -107,7 +107,7 @@ Recebe os detalhes do item preenchidos no app e os "salva" na lista.
 
 ```
 
-**Campos faltando no body → `400 Bad Request**`
+**Campos faltando no body → `400 Bad Request`**
 
 ```json
 {
