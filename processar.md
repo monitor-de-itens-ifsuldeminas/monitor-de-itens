@@ -26,7 +26,7 @@ Retorna quais itens estão faltando
 
 ## Por que existe uma "lista padrão" (mock)?
 
-No sistema real, os itens obrigatórios de cada usuário ficam salvos no banco de dados. Porém, **o banco ainda está sendo configurado**.
+No sistema real, os itens obrigatórios ficam salvos no banco de dados. Porém, **o banco ainda está sendo configurado**.
 
 Para que você consiga desenvolver e testar sua rota agora, sem depender do banco, você vai usar uma **lista fixa no próprio código** que imita exatamente o que viria do banco. Quando o banco estiver pronto, o responsável substitui essa lista pela consulta real — e sua rota continua funcionando sem nenhuma outra mudança.
 
@@ -47,15 +47,12 @@ ITENS_MOCK = [
 
 ## O que a rota recebe
 
-**Método:** `POST`
-**Rota:** `/processar`
-**Content-Type:** `application/json`
+**Método:** `POST` | **Rota:** `/processar` | **Content-Type:** `application/json`
 
-O Raspberry Pi vai enviar um JSON com o ID do usuário e a lista de UIDs que o leitor conseguiu captar na saída:
+O Raspberry Pi vai enviar um JSON com a lista de UIDs que o leitor conseguiu captar na saída:
 
 ```json
 {
-  "usuario_id": 1,
   "uids_lidos": [
     "E2003412B802011833303632",
     "E2003412B802011833303634"
@@ -95,7 +92,7 @@ No exemplo acima, a Carteira (`...3633`) **não aparece** na lista — ou seja, 
 
 ```json
 {
-  "erro": "Campos 'usuario_id' e 'uids_lidos' são obrigatórios."
+  "erro": "O campo 'uids_lidos' é obrigatório."
 }
 ```
 
@@ -121,7 +118,6 @@ POST http://localhost:5000/processar
 Content-Type: application/json
 
 {
-  "usuario_id": 1,
   "uids_lidos": [
     "E2003412B802011833303632",
     "E2003412B802011833303634"
@@ -135,7 +131,6 @@ POST http://localhost:5000/processar
 Content-Type: application/json
 
 {
-  "usuario_id": 1,
   "uids_lidos": [
     "E2003412B802011833303632",
     "E2003412B802011833303633",
@@ -149,9 +144,7 @@ Content-Type: application/json
 POST http://localhost:5000/processar
 Content-Type: application/json
 
-{
-  "usuario_id": 1
-}
+{}
 ```
 
 ### 4. Execute
