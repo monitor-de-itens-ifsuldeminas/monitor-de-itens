@@ -35,14 +35,13 @@ ITENS_MOCK = [
     {"uid": "E2003412B802011833303635", "nome": "Chave do Carro",   "obrigatorio": False, "usuario_id": 1},
     {"uid": "E2003412B802011833303636", "nome": "Cartão do Ônibus", "obrigatorio": True,  "usuario_id": 2},
 ]
-
 ```
 
 ---
 
 ## Rota `GET /itens`
 
-Retorna os itens pertencentes a um usuário específico. O ID do usuário deve ser enviado via URL (Query Parameter).
+Retorna os itens pertencentes a um usuário específico. O ID do usuário deve ser enviado via URL como query parameter.
 
 **Método:** `GET` | **Rota:** `/itens?usuario_id=1`
 
@@ -53,12 +52,11 @@ Retorna os itens pertencentes a um usuário específico. O ID do usuário deve s
 ```json
 {
   "itens": [
-    {"uid": "...", "nome": "Chave de Casa", "obrigatorio": true},
-    {"uid": "...", "nome": "Carteira", "obrigatorio": true}
+    {"uid": "E2003412B802011833303632", "nome": "Chave de Casa", "obrigatorio": true},
+    {"uid": "E2003412B802011833303633", "nome": "Carteira", "obrigatorio": true}
   ],
   "total": 2
 }
-
 ```
 
 **Usuário não informado ou inválido → `400 Bad Request`**
@@ -67,7 +65,6 @@ Retorna os itens pertencentes a um usuário específico. O ID do usuário deve s
 {
   "erro": "O parâmetro 'usuario_id' é obrigatório e deve ser um número."
 }
-
 ```
 
 ---
@@ -87,16 +84,14 @@ Remove um item da lista utilizando o código único (UID) dele.
   "mensagem": "Item removido com sucesso.",
   "uid": "E2003412B802011833303633"
 }
-
 ```
 
 **UID não encontrado na lista → `404 Not Found`**
 
 ```json
 {
-  "erro": "Item com UID '...' não encontrado."
+  "erro": "Item com UID 'E2003412B802011833303633' não encontrado."
 }
-
 ```
 
 ---
@@ -133,7 +128,6 @@ DELETE http://localhost:5000/itens/E2003412B802011833303633
 
 ### Teste 4 — Tentar remover um item que não existe
 DELETE http://localhost:5000/itens/UID_INEXISTENTE
-
 ```
 
 ### 4. Execute
@@ -141,3 +135,15 @@ DELETE http://localhost:5000/itens/UID_INEXISTENTE
 Acima de cada bloco `###` aparece o link **Send Request** — clique nele para disparar a requisição. A resposta abre em um painel lateral com o status HTTP e o JSON retornado.
 
 > ⚠️ Sua API precisa estar rodando localmente (`flask run` ou `python app.py`) antes de clicar em Send Request.
+>
+> 💡 **Atenção ao testar o DELETE:** como a lista existe apenas na memória enquanto o servidor está rodando, ela volta ao estado original toda vez que a API for reiniciada. Se você deletar um item e quiser testá-lo novamente, basta reiniciar o servidor.
+
+---
+
+## Checklist — suas rotas estão prontas quando:
+
+- [ ] Teste 1 retorna apenas os itens do `usuario_id=1` com o campo `total` correto
+- [ ] Teste 2 retorna erro `400` (parâmetro ausente)
+- [ ] Teste 3 retorna `200` confirmando a remoção
+- [ ] Teste 4 retorna erro `404` (UID inexistente)
+- [ ] Após o Teste 3, o Teste 1 não exibe mais o item removido (até reiniciar o servidor)
