@@ -28,7 +28,7 @@ Retorna quais itens estão faltando
 
 No sistema real, os itens obrigatórios de cada usuário ficam salvos no banco de dados. Porém, **o banco ainda está sendo configurado**.
 
-Para que você consiga desenvolver e testar sua rota agora, sem depender do banco, você vai usar uma **lista fixa no próprio código** que imita exatamente o que viria do banco.
+Para que você consiga desenvolver e testar sua rota agora, sem depender do banco, você vai usar uma **lista fixa no próprio código** que imita exatamente o que viria do banco. Quando o banco estiver pronto, o responsável substitui essa lista pela consulta real — e sua rota continua funcionando sem nenhuma outra mudança.
 
 **Essa é a lista que você deve declarar no seu arquivo:**
 
@@ -159,3 +159,12 @@ Content-Type: application/json
 Acima de cada bloco `###` aparece o link **Send Request** — clique nele para disparar a requisição. A resposta abre em um painel lateral com o status HTTP e o JSON retornado.
 
 > ⚠️ Sua API precisa estar rodando localmente (`flask run` ou `python app.py`) antes de clicar em Send Request.
+
+---
+
+## Checklist — sua rota está pronta quando:
+
+- [ ] Teste 1 retorna `status: "alerta"` com a Carteira listada em `itens_faltando`
+- [ ] Teste 2 retorna `status: "ok"` com `itens_faltando` vazio
+- [ ] Teste 3 retorna erro `400`
+- [ ] Itens com `obrigatorio: False` nunca aparecem em `itens_faltando`
