@@ -23,7 +23,7 @@ Sem essas rotas funcionando, o app não consegue criar conta nem acessar nenhum 
 
 No sistema real, os usuários ficam salvos no banco de dados. Porém, **o banco ainda está sendo configurado**.
 
-Para que você consiga desenvolver e testar agora, sem depender do banco, você vai usar uma **lista fixa no próprio código** que imita o que viria do banco. A ideia é simples: sua rota consulta a lista, valida os dados e responde corretamente. Quando o banco estiver pronto, a lista será substituida pela consulta real — e suas rotas continuam funcionando sem mais alterações.
+Para que você consiga desenvolver e testar agora, sem depender do banco, você vai usar uma **lista fixa no próprio código** que imita o que viria do banco. A ideia é simples: sua rota consulta a lista, valida os dados e responde corretamente. Quando o banco estiver pronto, a lista será substituída pela consulta real — e suas rotas continuam funcionando sem mais alterações.
 
 **Essa é a lista que você deve declarar no seu arquivo:**
 
@@ -85,7 +85,9 @@ Cria um novo usuário. O app envia nome, e-mail e senha; a rota valida se o e-ma
 
 ## Rota `POST /login`
 
-Autentica o usuário. O app envia e-mail e senha; a rota verifica se existe alguém com essas credenciais na lista e, se sim, devolve um **token JWT** — uma espécie de "crachá digital" que o app vai usar para provar sua identidade nas próximas requisições.
+Autentica o usuário. O app envia e-mail e senha; a rota verifica se existe alguém com essas credenciais na lista e, se sim, devolve um **token JWT**.
+
+> 💡 **O que é um token JWT?** É uma espécie de "crachá digital" gerado pela API depois que o login é feito. O app guarda esse crachá e o apresenta nas próximas requisições para provar que o usuário está autenticado — sem precisar digitar senha de novo.
 
 **Método:** `POST` | **Rota:** `/login` | **Content-Type:** `application/json`
 
@@ -213,3 +215,13 @@ Content-Type: application/json
 Acima de cada bloco `###` aparece o link **Send Request** — clique nele para disparar a requisição. A resposta abre em um painel lateral com o status HTTP e o JSON retornado.
 
 > ⚠️ Sua API precisa estar rodando localmente (`flask run` ou `python app.py`) antes de clicar em Send Request.
+
+---
+
+## Checklist — suas rotas estão prontas quando:
+
+- [ ] Teste 1 retorna o novo usuário com `id` e status `201`
+- [ ] Teste 2 retorna erro `409` (e-mail duplicado)
+- [ ] Teste 3 retorna erro `400` (campo faltando)
+- [ ] Teste 4 retorna o token JWT e os dados do usuário com status `200`
+- [ ] Teste 5 retorna erro `401` (credenciais inválidas)
