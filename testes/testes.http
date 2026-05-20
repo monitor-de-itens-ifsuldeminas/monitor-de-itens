@@ -1,0 +1,32 @@
+### Teste 1 — Item faltando (Carteira não está entre os UIDs enviados)
+POST http://localhost:5000/processar
+Content-Type: application/json
+
+{
+  "uids_lidos": [
+    "E2003412B802011833303632",
+    "E2003412B802011833303634"
+  ]
+}
+
+###
+
+### Teste 2 — Todos os itens obrigatórios presentes
+POST http://localhost:5000/processar
+Content-Type: application/json
+
+{
+  "uids_lidos": [
+    "E2003412B802011833303632",
+    "E2003412B802011833303633",
+    "E2003412B802011833303634"
+  ]
+}
+
+###
+
+### Teste 3 — Body inválido (campo uids_lidos ausente)
+POST http://localhost:5000/processar
+Content-Type: application/json
+
+{}
