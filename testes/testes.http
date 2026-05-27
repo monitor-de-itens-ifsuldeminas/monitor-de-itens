@@ -1,0 +1,35 @@
+### Teste 1 — Raspberry Pi envia um UID para o backend
+POST http://localhost:5000/cadastrar-uid
+Content-Type: application/json
+
+{
+  "uid": "E2003412B802011833303699"
+}
+
+###
+
+### Teste 2 — App consulta o último UID recebido
+GET http://localhost:5000/ler-uid
+
+###
+
+### Teste 3 — Raspberry Pi envia um novo UID (sobrescreve o anterior)
+POST http://localhost:5000/cadastrar-uid
+Content-Type: application/json
+
+{
+  "uid": "E2003412B802011833303700"
+}
+
+###
+
+### Teste 4 — App consulta novamente (deve retornar o UID novo)
+GET http://localhost:5000/ler-uid
+
+###
+
+### Teste 5 — Body inválido (campo uid ausente)
+POST http://localhost:5000/cadastrar-uid
+Content-Type: application/json
+
+{}
