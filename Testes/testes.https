@@ -1,0 +1,43 @@
+### Teste 1 — Cadastrar um novo item (esperado: 201)
+POST http://localhost:5000/itens
+Content-Type: application/json
+
+{
+  "uid": "E2003412B802011833303699",
+  "nome": "Chave do Armário",
+  "obrigatorio": true
+}
+
+###
+
+### Teste 2 — Tentar cadastrar o mesmo UID recém-cadastrado (esperado: 409)
+POST http://localhost:5000/itens
+Content-Type: application/json
+
+{
+  "uid": "E2003412B802011833303699",
+  "nome": "Nome Diferente",
+  "obrigatorio": false
+}
+
+###
+
+### Teste 3 — Tentar cadastrar UID já existente no mock (esperado: 409)
+POST http://localhost:5000/itens
+Content-Type: application/json
+
+{
+  "uid": "E2003412B802011833303632",
+  "nome": "Item Repetido",
+  "obrigatorio": false
+}
+
+###
+
+### Teste 4 — Body com campo faltando (esperado: 400)
+POST http://localhost:5000/itens
+Content-Type: application/json
+
+{
+  "nome": "Item Sem UID"
+}
