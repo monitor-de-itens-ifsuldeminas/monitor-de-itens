@@ -23,10 +23,10 @@ def cadastrar_item():
         if item["uid"]  == uid:
             return jsonify({"erro": "Já existe um item cadastrado com este UID."}), 409
         
-        novo_item = {"uid": uid, "nome": nome, "obrigatorio": obrigatorio}
-        ITENS_MOCK.append(novo_item)
+    novo_item = {"uid": uid, "nome": nome, "obrigatorio": obrigatorio}
+    ITENS_MOCK.append(novo_item)
 
-        return jsonify({"mensagem": "Item cadastrado com sucesso.", "item": novo_item}), 201
+    return jsonify({"mensagem": "Item cadastrado com sucesso.", "item": novo_item}), 201
     
-    if __name__ == "__main__":
+if __name__ == "__main__":
         app.run(debug=True)
