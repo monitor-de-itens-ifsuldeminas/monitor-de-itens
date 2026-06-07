@@ -1,0 +1,238 @@
+{
+  "info": {
+    "name": "Monitor de Itens API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000"
+    }
+  ],
+  "item": [
+    {
+      "name": "📦 Itens",
+      "item": [
+        {
+          "name": "POST /itens — cadastrar item",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uid\": \"TESTE001\",\n  \"nome\": \"Item Teste\",\n  \"obrigatorio\": true\n}"
+            },
+            "url": "{{base_url}}/itens"
+          }
+        },
+        {
+          "name": "POST /itens — UID duplicado",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uid\": \"TESTE001\",\n  \"nome\": \"Item Teste\",\n  \"obrigatorio\": true\n}"
+            },
+            "url": "{{base_url}}/itens"
+          }
+        },
+        {
+          "name": "POST /itens — campos ausentes",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uid\": \"TESTE002\"\n}"
+            },
+            "url": "{{base_url}}/itens"
+          }
+        },
+        {
+          "name": "GET /itens — listar todos",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/itens"
+          }
+        },
+        {
+          "name": "DELETE /itens/:uid — remover item",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/itens/TESTE001"
+          }
+        },
+        {
+          "name": "DELETE /itens/:uid — não encontrado",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/itens/TESTE001"
+          }
+        }
+      ]
+    },
+    {
+      "name": "📡 UID Buffer",
+      "item": [
+        {
+          "name": "POST /cadastrar-uid — armazenar UID",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uid\": \"E2003412B802011833303699\"\n}"
+            },
+            "url": "{{base_url}}/cadastrar-uid"
+          }
+        },
+        {
+          "name": "POST /cadastrar-uid — campo ausente",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": "{{base_url}}/cadastrar-uid"
+          }
+        },
+        {
+          "name": "GET /ler-uid — sem parametro desde",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/ler-uid"
+          }
+        },
+        {
+          "name": "GET /ler-uid — polling com desde",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/ler-uid?desde=2025-01-01T00:00:00Z",
+              "host": ["{{base_url}}"],
+              "path": ["ler-uid"],
+              "query": [
+                {
+                  "key": "desde",
+                  "value": "2025-01-01T00:00:00Z",
+                  "description": "Substitua pelo timestamp ISO 8601 do momento em que o usuario clicou no botao no app"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /ler-uid — polling com desde futuro",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/ler-uid?desde=2099-01-01T00:00:00Z",
+              "host": ["{{base_url}}"],
+              "path": ["ler-uid"],
+              "query": [
+                {
+                  "key": "desde",
+                  "value": "2099-01-01T00:00:00Z",
+                  "description": "Timestamp no futuro — simula buffer vazio para o poll atual"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /ler-uid — formato invalido",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/ler-uid?desde=data-invalida",
+              "host": ["{{base_url}}"],
+              "path": ["ler-uid"],
+              "query": [
+                {
+                  "key": "desde",
+                  "value": "data-invalida"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "⚙️ Processar",
+      "item": [
+        {
+          "name": "POST /processar — todos os itens presentes",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uids_lidos\": [\n    \"E2003412B802011833303632\",\n    \"E2003412B802011833303633\",\n    \"E2003412B802011833303634\"\n  ]\n}",
+              "_comment": "Ajuste os UIDs conforme os itens obrigatorios cadastrados no seu banco"
+            },
+            "url": "{{base_url}}/processar"
+          }
+        },
+        {
+          "name": "POST /processar — itens faltando",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uids_lidos\": [\n    \"E2003412B802011833303632\"\n  ]\n}",
+              "_comment": "Envia apenas um UID — os demais obrigatorios devem aparecer em itens_faltando"
+            },
+            "url": "{{base_url}}/processar"
+          }
+        },
+        {
+          "name": "POST /processar — lista vazia",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uids_lidos\": []\n}"
+            },
+            "url": "{{base_url}}/processar"
+          }
+        },
+        {
+          "name": "POST /processar — campo ausente",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": "{{base_url}}/processar"
+          }
+        }
+      ]
+    }
+  ]
+}
