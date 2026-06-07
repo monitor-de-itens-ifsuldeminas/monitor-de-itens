@@ -13,6 +13,7 @@ def create_app():
 
     init_db(app)
 
-    # As rotas serão registradas aqui posteriormente
+    from app.routes import register_blueprints
+    register_blueprints(app)
 
     return app
