@@ -1,6 +1,6 @@
 """
 Módulo de Processamento e Verificação de Itens.
-Valida as leituras enviadas pelo leitor Raspberry e gerencia notificações em caso de itens obrigatórios ausentes.
+Valida as leituras enviadas pelo Raspberry e gerencia notificações em caso de itens obrigatórios ausentes.
 """
 
 from flask import Blueprint, request, jsonify
@@ -32,20 +32,24 @@ def processar():
 
     if itens_faltando:
         quantidade = len(itens_faltando)
+        nomes = [item["nome"] for item in itens_faltando]
 
         # Formatação Dinâmica de Texto
-        mensagem = (
-            f"{quantidade} item obrigatório não foi encontrado."
-            if quantidade == 1
-            else f"{quantidade} itens obrigatórios não foram encontrados."
-        )
+        if quantidade == 1:
+            titulo = "⚠️ Item esquecido!"
+            corpo = f"Você está saindo sem: {nomes[0]}."
+        else:
+            lista_nomes = ", ".join(nomes[:-1]) + f" e {nomes[-1]}"
+            titulo = f"⚠️ {quantidade} itens esquecidos!"
+            corpo = f"Você está saindo sem: {lista_nomes}."
 
         # Disparo do Alerta para o OneSignal
-        enviar_notificacao(mensagem)
+        enviar_notificacao(titulo, corpo)
+
         return jsonify({
             "status": "alerta",
             "itens_faltando": itens_faltando,
-            "mensagem": mensagem
+            "mensagem": corpo
         }), 200
 
     return jsonify({

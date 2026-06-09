@@ -10,16 +10,19 @@ ONESIGNAL_APP_ID = os.getenv("ONESIGNAL_APP_ID")
 ONESIGNAL_API_KEY = os.getenv("ONESIGNAL_API_KEY")
 
 # FUNÇÃO: Enviar Notificação Global
-def enviar_notificacao(mensagem: str) -> None:
+def enviar_notificacao(titulo: str, mensagem: str) -> None:
     # Validação de Credenciais do Sistema
     if not ONESIGNAL_APP_ID or not ONESIGNAL_API_KEY:
-        print(f"[OneSignal] Credenciais não configuradas. Mensagem ignorada: {mensagem}")
+        print(f"[OneSignal] Credenciais não configuradas.")
+        print(f"[OneSignal] Título: {titulo}")
+        print(f"[OneSignal] Mensagem: {mensagem}")
         return
 
-    # Montagem do Payload para Segmento Global (Todos os Usuários)
+    # Montagem do Payload para Segmento Global
     payload = {
         "app_id": ONESIGNAL_APP_ID,
         "included_segments": ["All"],
+        "headings": {"pt": titulo, "en": titulo},
         "contents": {"pt": mensagem, "en": mensagem},
     }
 
@@ -40,7 +43,7 @@ def enviar_notificacao(mensagem: str) -> None:
         # Intercepção de Erros de Status HTTP
         response.raise_for_status()
         print(f"[OneSignal] Notificação enviada: {response.json()}")
-        
+
     # Tratamento de Exceções de Rede e Integração
     except requests.RequestException as e:
         print(f"[OneSignal] Erro ao enviar notificação: {e}")
