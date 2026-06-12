@@ -43,6 +43,35 @@ def listar_itens():
     lista = [{"uid": i.uid, "nome": i.nome, "obrigatorio": i.obrigatorio} for i in itens]
     return jsonify({"itens": lista, "total": len(lista)}), 200
 
+# ROTA: Editar Item
+@itens_bp.route("/itens/<uid>", methods=["PATCH"])
+def editar_item(uid):
+    item = Item.query.filter_by(uid=uid).first()
+
+    if not item:
+        return jsonify({"erro": f"Item com UID '{uid}' não encontrado."}), 404
+
+    dados = request.get_json()
+
+    # Validações de Segurança
+    if not dados or ("nome" not in dados and "obrigatorio" not in dados):
+        return jsonify({"erro": "Informe ao menos um campo para editar: 'nome' ou 'obrigatorio'."}), 400
+    if "uid" in dados:
+        return jsonify({"erro": "O campo 'uid' não pode ser alterado."}), 400
+
+    # Aplicação das Alterações
+    if "nome" in dados:
+        item.nome = dados["nome"]
+    if "obrigatorio" in dados:
+        item.obrigatorio = dados["obrigatorio"]
+
+    db.session.commit()
+
+    return jsonify({
+        "mensagem": "Item atualizado com sucesso.",
+        "item": {"uid": item.uid, "nome": item.nome, "obrigatorio": item.obrigatorio}
+    }), 200
+
 # ROTA: Remover Item por UID
 @itens_bp.route("/itens/<uid>", methods=["DELETE"])
 def remover_item(uid):

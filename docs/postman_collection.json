@@ -63,6 +63,90 @@
           }
         },
         {
+          "name": "PATCH /itens/:uid — editar nome",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Item Teste Editado\"\n}"
+            },
+            "url": "{{base_url}}/itens/TESTE001"
+          }
+        },
+        {
+          "name": "PATCH /itens/:uid — editar obrigatorio",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"obrigatorio\": false\n}"
+            },
+            "url": "{{base_url}}/itens/TESTE001"
+          }
+        },
+        {
+          "name": "PATCH /itens/:uid — editar nome e obrigatorio",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Item Teste Editado\",\n  \"obrigatorio\": false\n}"
+            },
+            "url": "{{base_url}}/itens/TESTE001"
+          }
+        },
+        {
+          "name": "PATCH /itens/:uid — tentativa de editar UID",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"uid\": \"NOVO_UID\",\n  \"nome\": \"Outro Nome\"\n}"
+            },
+            "url": "{{base_url}}/itens/TESTE001"
+          }
+        },
+        {
+          "name": "PATCH /itens/:uid — sem campos editaveis",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": "{{base_url}}/itens/TESTE001"
+          }
+        },
+        {
+          "name": "PATCH /itens/:uid — item nao encontrado",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Qualquer Nome\"\n}"
+            },
+            "url": "{{base_url}}/itens/UID_INEXISTENTE"
+          }
+        },
+        {
           "name": "DELETE /itens/:uid — remover item",
           "request": {
             "method": "DELETE",
